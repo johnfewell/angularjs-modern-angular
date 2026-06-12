@@ -4,10 +4,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo.service';
 
 @Component({
-  selector: 'app-todo-header',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  template: `<header class="header">
+    selector: 'app-todo-header',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    template: `<header class="header">
     <h1>todos - Angular 17.1</h1>
     <input
       class="new-todo"
@@ -17,7 +16,7 @@ import { TodoService } from '../../services/todo.service';
       (keyup.enter)="addTodo()"
     />
   </header>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoHeaderComponent {
   constructor(private todosService: TodoService) {}

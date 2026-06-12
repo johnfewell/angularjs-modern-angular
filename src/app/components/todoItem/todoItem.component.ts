@@ -14,10 +14,9 @@ import { Todo } from '../../repostories/todos.repository';
 import { TodoService } from '../../services/todo.service';
 
 @Component({
-  selector: 'app-todo-item',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  template: `<li
+    selector: 'app-todo-item',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    template: `<li
     [ngClass]="{ completed: todo.completed, editing: isEditing }"
     style="border-bottom: 1px solid #ededed;"
   >
@@ -46,8 +45,8 @@ import { TodoService } from '../../services/todo.service';
       </label>
     </div>
   </li>`,
-  styles: ['li {border-bottom: 1px solid #ededed;}'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: ['li {border-bottom: 1px solid #ededed;}'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoItemComponent implements AfterViewChecked {
   private _todo: Todo = {

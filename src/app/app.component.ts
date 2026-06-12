@@ -15,11 +15,10 @@ import { TodoListComponent } from './components/todoList/todoList.component';
 import { z } from 'zod';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  imports: [TodoFooterComponent, TodoHeaderComponent, TodoListComponent],
-  standalone: true,
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [TodoFooterComponent, TodoHeaderComponent, TodoListComponent]
 })
 export class AppComponent implements OnChanges {
   @Input() state: Todo[] = [];

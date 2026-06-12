@@ -5,10 +5,9 @@ import { Todo } from '../../repostories/todos.repository';
 import { TodoItemComponent } from '../todoItem/todoItem.component';
 
 @Component({
-  selector: 'app-todo-list',
-  standalone: true,
-  imports: [CommonModule, TodoItemComponent],
-  template: `
+    selector: 'app-todo-list',
+    imports: [CommonModule, TodoItemComponent],
+    template: `
     <main class="main">
       @if(todos.length){
       <div class="toggle-all-container">
@@ -35,7 +34,7 @@ import { TodoItemComponent } from '../todoItem/todoItem.component';
       }
     </main>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoListComponent {
   constructor(public todosService: TodoService) {}

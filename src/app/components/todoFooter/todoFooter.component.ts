@@ -4,10 +4,9 @@ import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../repostories/todos.repository';
 
 @Component({
-  selector: 'app-todo-footer',
-  standalone: true,
-  imports: [CommonModule],
-  template: ` @if(allTodos.length){
+    selector: 'app-todo-footer',
+    imports: [CommonModule],
+    template: ` @if(allTodos.length){
     <footer class="footer">
       <span class="todo-count"
         ><strong>{{ activeTodos.length }}</strong>
@@ -49,7 +48,7 @@ import { Todo } from '../../repostories/todos.repository';
       </button>
     </footer>
     }`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoFooterComponent {
   constructor(public todosService: TodoService) {}
