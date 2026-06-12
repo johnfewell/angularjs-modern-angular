@@ -1,11 +1,11 @@
 {
-  "name": "angularjs-angular17",
+  "name": "angularjs-modern-angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --output-path=angularjs/bundles",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration development --output-path=angularjs/bundles",
     "test": "ng test"
   },
   "private": true,
@@ -28,7 +28,7 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^22.0.1",
+    "@angular/build": "^22.0.1",
     "@angular/cli": "^22.0.1",
     "@angular/compiler-cli": "^22.0.1",
     "@ngneat/elf-cli": "^3.1.0",

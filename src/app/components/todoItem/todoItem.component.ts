@@ -4,10 +4,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
+  input,
+  output,
+  viewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Todo } from '../../repostories/todos.repository';
@@ -17,7 +16,7 @@ import { TodoService } from '../../services/todo.service';
     selector: 'app-todo-item',
     imports: [CommonModule, FormsModule, ReactiveFormsModule],
     template: `<li
-      [ngClass]="{ completed: todo.completed, editing: isEditing }"
+      [ngClass]="{ completed: todo().completed, editing: isEditing }"
       style="border-bottom: 1px solid #ededed;"
       >
       <div class="view">
@@ -25,9 +24,9 @@ import { TodoService } from '../../services/todo.service';
           class="toggle"
           type="checkbox"
           (click)="toggleTodo()"
-          [checked]="todo.completed"
+          [checked]="todo().completed"
           />
-        <label (dblclick)="startEdit()">{{ todo.title }}</label>
+        <label (dblclick)="startEdit()">{{ todo().title }}</label>
         <button class="destroy" (click)="removeTodo()"></button>
       </div>
       @if (isEditing) {
@@ -51,27 +50,13 @@ import { TodoService } from '../../services/todo.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoItemComponent implements AfterViewChecked {
-  private _todo: Todo = {
-    id: 0,
-    title: '',
-    completed: false,
-  };
+  todo = input.required<Todo>();
 
-  @Input()
-  set todo(value: Todo) {
-    this._todo = value;
-    console.log('todo input', value);
-  }
+  index = input(0);
 
-  get todo(): Todo {
-    return this._todo;
-  }
+  deleteEvent = output<Todo>();
 
-  @Input() index: number = 0;
-
-  @Output() deleteEvent = new EventEmitter<Todo>();
-
-  @ViewChild('todoInputRef') inputRef: ElementRef | undefined;
+  inputRef = viewChild<ElementRef>('todoInputRef');
 
   constructor(private todoSerivce: TodoService) {}
 
@@ -80,12 +65,11 @@ export class TodoItemComponent implements AfterViewChecked {
   isEditing = false;
 
   toggleTodo(): void {
-    this.todoSerivce.toggleTodo(this.todo.id);
-    this.todo.completed = !this.todo.completed;
+    this.todoSerivce.toggleTodo(this.todo().id);
   }
 
   removeTodo(): void {
-    this.deleteEvent.emit(this.todo);
+    this.deleteEvent.emit(this.todo());
   }
 
   startEdit() {
@@ -97,16 +81,16 @@ export class TodoItemComponent implements AfterViewChecked {
   }
 
   handleFocus(_e: Event) {
-    this.titleFormControl.setValue(this.todo.title);
+    this.titleFormControl.setValue(this.todo().title);
   }
 
   updateTodo() {
     const title = this.titleFormControl.getRawValue()?.trimEnd();
     if (!title) {
-      this.deleteEvent.emit(this.todo);
+      this.deleteEvent.emit(this.todo());
     } else {
       const payload = {
-        ...this.todo,
+        ...this.todo(),
         title,
       };
       this.todoSerivce.saveEdits(payload);
@@ -116,6 +100,6 @@ export class TodoItemComponent implements AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.isEditing) this.inputRef?.nativeElement.focus();
+    if (this.isEditing) this.inputRef()?.nativeElement.focus();
   }
 }

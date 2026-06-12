@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, VERSION } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo.service';
 
@@ -7,7 +7,7 @@ import { TodoService } from '../../services/todo.service';
     selector: 'app-todo-header',
     imports: [FormsModule, ReactiveFormsModule],
     template: `<header class="header">
-    <h1>todos - Angular 17.1</h1>
+    <h1>todos - Angular {{ version }}</h1>
     <input
       class="new-todo"
       placeholder="What needs to be done?"
@@ -20,6 +20,8 @@ import { TodoService } from '../../services/todo.service';
 })
 export class TodoHeaderComponent {
   constructor(private todosService: TodoService) {}
+
+  version = VERSION.full;
 
   titleFormControl = new FormControl('');
 

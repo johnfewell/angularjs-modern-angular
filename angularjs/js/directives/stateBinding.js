@@ -1,4 +1,4 @@
-angular.module("todomvc").directive("angular17App", [
+angular.module("todomvc").directive("modernAngularApp", [
   function () {
     return {
       restrict: "E",
@@ -7,9 +7,7 @@ angular.module("todomvc").directive("angular17App", [
         onNotify: "&",
       },
       link: function (scope, element) {
-        scope.$watch("state", function (newVal, oldVal) {
-          console.log("AngularJS Directive - Old value:", oldVal);
-          console.log("AngularJS Directive - New value:", newVal);
+        scope.$watch("state", function (newVal) {
           element[0].state = newVal;
         });
 

@@ -1,11 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-  ChangeDetectionStrategy
+  effect,
+  inject,
+  input,
+  output,
+  untracked,
 } from '@angular/core';
 import { Todo, TodoSchema, setTodos } from './repostories/todos.repository';
 import { TodoService } from './services/todo.service';
@@ -22,32 +22,35 @@ import { z } from 'zod';
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TodoFooterComponent, TodoHeaderComponent, TodoListComponent]
 })
-export class AppComponent implements OnChanges {
-  @Input() state: Todo[] = [];
-  @Output() notify: EventEmitter<Todo[]> = new EventEmitter<Todo[]>();
-  todos$ = this.todoService.todos$;
+export class AppComponent {
+  private todoService = inject(TodoService);
 
-  constructor(public todoService: TodoService) {
-    this.todos$.subscribe((val) => {
-      if (!deepEqual(this.state, val)) {
-        this.notify.emit(val);
-      }
-    });
-  }
+  state = input<Todo[] | string>([]);
+  notify = output<Todo[]>();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['state']?.currentValue !== 'stateObject' &&
-      changes['state']?.currentValue !== undefined
-    ) {
-      const todos = changes['state'].currentValue;
-      const result = z.array(TodoSchema).safeParse(todos);
+  constructor() {
+    // Inbound: AngularJS pushed a new state object into the element.
+    effect(() => {
+      const value = this.state();
+      // Before AngularJS's first digest cycle, the bound attribute arrives
+      // as the literal string 'stateObject' rather than the object.
+      if (value === 'stateObject' || value === undefined) return;
 
+      const result = z.array(TodoSchema).safeParse(value);
       if (result.success) {
         setTodos(result.data);
       } else {
         console.error('Invalid todo schema:', result.error);
       }
-    }
+    });
+
+    // Outbound: notify AngularJS when our store diverges from the state it
+    // last gave us. untracked() means only store changes re-run this effect.
+    effect(() => {
+      const todos = this.todoService.todos();
+      if (!deepEqual(untracked(this.state), todos)) {
+        this.notify.emit(todos);
+      }
+    });
   }
 }

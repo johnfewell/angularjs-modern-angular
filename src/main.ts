@@ -4,7 +4,7 @@ import { createApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 enableProdMode();
 
-const ELEMENT_TAG = 'angular17-app';
+const ELEMENT_TAG = 'modern-angular-app';
 
 createApplication().then((appRef) => {
   const elementConstructor = createCustomElement(AppComponent, {
