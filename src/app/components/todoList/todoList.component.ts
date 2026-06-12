@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../repostories/todos.repository';
@@ -6,7 +6,7 @@ import { TodoItemComponent } from '../todoItem/todoItem.component';
 
 @Component({
     selector: 'app-todo-list',
-    imports: [CommonModule, TodoItemComponent],
+    imports: [TodoItemComponent],
     template: `
     <main class="main">
       @if(todos.length){

@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoService } from '../../services/todo.service';
 
 @Component({
     selector: 'app-todo-header',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, ReactiveFormsModule],
     template: `<header class="header">
     <h1>todos - Angular 17.1</h1>
     <input

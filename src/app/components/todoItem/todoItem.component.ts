@@ -17,34 +17,36 @@ import { TodoService } from '../../services/todo.service';
     selector: 'app-todo-item',
     imports: [CommonModule, FormsModule, ReactiveFormsModule],
     template: `<li
-    [ngClass]="{ completed: todo.completed, editing: isEditing }"
-    style="border-bottom: 1px solid #ededed;"
-  >
-    <div class="view">
-      <input
-        class="toggle"
-        type="checkbox"
-        (click)="toggleTodo()"
-        [checked]="todo.completed"
-      />
-      <label (dblclick)="startEdit()">{{ todo.title }}</label>
-      <button class="destroy" (click)="removeTodo()"></button>
-    </div>
-    <div *ngIf="isEditing" class="input-container">
-      <input
-        #todoInputRef
-        class="edit"
-        id="edit-todo-input"
-        (focus)="handleFocus($event)"
-        (blur)="handleBlur($event)"
-        (keyup.enter)="updateTodo()"
-        [formControl]="titleFormControl"
-      />
-      <label class="visually-hidden" htmlFor="edit-todo-input">
-        Edit Todo Input
-      </label>
-    </div>
-  </li>`,
+      [ngClass]="{ completed: todo.completed, editing: isEditing }"
+      style="border-bottom: 1px solid #ededed;"
+      >
+      <div class="view">
+        <input
+          class="toggle"
+          type="checkbox"
+          (click)="toggleTodo()"
+          [checked]="todo.completed"
+          />
+        <label (dblclick)="startEdit()">{{ todo.title }}</label>
+        <button class="destroy" (click)="removeTodo()"></button>
+      </div>
+      @if (isEditing) {
+        <div class="input-container">
+          <input
+            #todoInputRef
+            class="edit"
+            id="edit-todo-input"
+            (focus)="handleFocus($event)"
+            (blur)="handleBlur($event)"
+            (keyup.enter)="updateTodo()"
+            [formControl]="titleFormControl"
+            />
+          <label class="visually-hidden" htmlFor="edit-todo-input">
+            Edit Todo Input
+          </label>
+        </div>
+      }
+    </li>`,
     styles: ['li {border-bottom: 1px solid #ededed;}'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
