@@ -5,6 +5,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Todo, TodoSchema, setTodos } from './repostories/todos.repository';
 import { TodoService } from './services/todo.service';
@@ -18,6 +19,7 @@ import { z } from 'zod';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TodoFooterComponent, TodoHeaderComponent, TodoListComponent]
 })
 export class AppComponent implements OnChanges {
